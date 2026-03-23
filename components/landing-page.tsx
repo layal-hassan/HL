@@ -189,14 +189,14 @@ function SectionHeading({
   description: string;
 }) {
   return (
-    <div className="mx-auto mb-14 max-w-3xl text-center">
-      <p className="mb-4 text-sm font-semibold uppercase tracking-[0.35em] text-violet-300/75">
+    <div className="mx-auto mb-10 max-w-3xl text-center sm:mb-14">
+      <p className="mb-4 text-[11px] font-semibold uppercase tracking-[0.28em] text-violet-300/75 sm:text-sm sm:tracking-[0.35em]">
         {eyebrow}
       </p>
-      <h2 className="font-[family-name:var(--font-display)] text-3xl font-bold tracking-[-0.04em] text-white sm:text-4xl">
+      <h2 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-[-0.04em] text-white sm:text-4xl">
         {title}
       </h2>
-      <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-slate-300">
+      <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-slate-300 sm:text-base">
         {description}
       </p>
     </div>
@@ -285,12 +285,14 @@ function ContactIcon({ type }: { type: "email" | "phone" | "whatsapp" }) {
 export function LandingPage() {
   const carouselRef = useRef<HTMLDivElement>(null);
   const [dragLimit, setDragLimit] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const updateDragLimit = () => {
       if (!carouselRef.current) return;
       const { scrollWidth, offsetWidth } = carouselRef.current;
       setDragLimit(Math.max(scrollWidth - offsetWidth, 0));
+      setIsMobile(window.innerWidth < 640);
     };
 
     updateDragLimit();
@@ -313,7 +315,7 @@ export function LandingPage() {
       >
         <motion.header
           variants={item}
-          className="mx-auto flex w-full max-w-7xl items-center justify-between px-6 py-6 lg:px-10"
+          className="mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-4 px-4 py-5 sm:px-6 lg:px-10"
         >
           <a
             href="#home"
@@ -349,9 +351,24 @@ export function LandingPage() {
           </a>
         </motion.header>
 
+        <motion.div
+          variants={item}
+          className="mx-auto flex w-full max-w-7xl gap-2 overflow-x-auto px-4 pb-2 sm:px-6 md:hidden"
+        >
+          {navLinks.map((link) => (
+            <a
+              key={link}
+              href={`#${link.toLowerCase()}`}
+              className="shrink-0 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.22em] text-slate-200 backdrop-blur-xl"
+            >
+              {link}
+            </a>
+          ))}
+        </motion.div>
+
         <section
           id="home"
-          className="relative mx-auto max-w-7xl px-6 pb-24 pt-10 sm:pb-32 lg:px-10 lg:pt-16"
+          className="relative mx-auto max-w-7xl px-4 pb-20 pt-8 sm:px-6 sm:pb-32 sm:pt-10 lg:px-10 lg:pt-16"
         >
           <div className="pointer-events-none absolute left-1/2 top-8 h-[420px] w-[420px] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(123,97,255,0.42),rgba(123,97,255,0.12)_40%,transparent_72%)] blur-3xl animate-[pulseGlow_8s_ease-in-out_infinite]" />
           <div className="pointer-events-none absolute left-[14%] top-24 h-28 w-28 rounded-full bg-violet-500/20 blur-3xl animate-float" />
@@ -359,29 +376,29 @@ export function LandingPage() {
 
           <motion.div
             variants={container}
-            className="relative z-10 grid items-center gap-16 lg:grid-cols-[1.2fr_0.8fr]"
+            className="relative z-10 grid items-center gap-10 sm:gap-16 lg:grid-cols-[1.2fr_0.8fr]"
           >
             <div className="max-w-4xl">
               <motion.p
                 variants={item}
-                className="mb-6 inline-flex rounded-full border border-violet-400/25 bg-violet-500/10 px-4 py-2 text-sm uppercase tracking-[0.28em] text-violet-200"
+                className="mb-5 inline-flex rounded-full border border-violet-400/25 bg-violet-500/10 px-3 py-2 text-[11px] uppercase tracking-[0.22em] text-violet-200 sm:mb-6 sm:px-4 sm:text-sm sm:tracking-[0.28em]"
               >
                 Trusted by growing businesses
               </motion.p>
               <motion.h1
                 variants={item}
-                className="font-[family-name:var(--font-display)] text-5xl font-bold leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl lg:text-[5.7rem]"
+                className="font-[family-name:var(--font-display)] text-4xl font-bold leading-[0.98] tracking-[-0.06em] text-white sm:text-6xl lg:text-[5.7rem]"
               >
                 From Idea to Scalable Digital Product
               </motion.h1>
               <motion.p
                 variants={item}
-                className="mt-8 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl"
+                className="mt-6 max-w-2xl text-base leading-7 text-slate-300 sm:mt-8 sm:text-xl sm:leading-8"
               >
                 We design, build, and launch modern digital experiences that
                 actually convert.
               </motion.p>
-              <motion.div variants={item} className="mt-10 flex flex-wrap gap-4">
+              <motion.div variants={item} className="mt-8 flex flex-col gap-3 sm:mt-10 sm:flex-row sm:flex-wrap sm:gap-4">
                 <a href="#contact" className="button-glow">
                   Book a Call
                 </a>
@@ -391,22 +408,22 @@ export function LandingPage() {
               </motion.div>
               <motion.p
                 variants={item}
-                className="mt-5 max-w-2xl text-sm leading-7 text-slate-400 sm:text-base"
+                className="mt-4 max-w-2xl text-sm leading-7 text-slate-400 sm:mt-5 sm:text-base"
               >
                 UI/UX + Frontend + Backend - all in one place.
               </motion.p>
             </div>
 
             <motion.div variants={item} className="relative">
-              <div className="glass-panel relative overflow-hidden rounded-[32px] p-6 shadow-card">
+              <div className="glass-panel relative mx-auto max-w-[26rem] overflow-hidden rounded-[28px] p-4 shadow-card sm:max-w-none sm:rounded-[32px] sm:p-6">
                 <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-violet-200/60 to-transparent" />
                 <div className="grid gap-4">
-                  <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                    <div className="mb-4 flex items-center justify-between">
-                      <span className="text-xs uppercase tracking-[0.28em] text-violet-200/70">
+                  <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+                    <div className="mb-4 flex items-center justify-between gap-3">
+                      <span className="text-[11px] uppercase tracking-[0.22em] text-violet-200/70 sm:text-xs sm:tracking-[0.28em]">
                         Conversion Metrics
                       </span>
-                      <span className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-xs text-emerald-200">
+                      <span className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-[11px] text-emerald-200 sm:text-xs">
                         +38%
                       </span>
                     </div>
@@ -427,8 +444,8 @@ export function LandingPage() {
                   </div>
 
                   <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                      <p className="text-xs uppercase tracking-[0.28em] text-slate-400">
+                    <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+                      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 sm:text-xs sm:tracking-[0.28em]">
                         Growth Result
                       </p>
                       <p className="mt-4 font-[family-name:var(--font-display)] text-4xl font-bold text-white">
@@ -439,8 +456,8 @@ export function LandingPage() {
                       </p>
                       <p className="mt-3 text-sm text-slate-400">Real impact on user engagement.</p>
                     </div>
-                    <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                      <p className="text-xs uppercase tracking-[0.28em] text-slate-400">
+                    <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+                      <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 sm:text-xs sm:tracking-[0.28em]">
                         Delivery Speed
                       </p>
                       <p className="mt-4 font-[family-name:var(--font-display)] text-4xl font-bold text-white">
@@ -452,8 +469,8 @@ export function LandingPage() {
                       <p className="mt-3 text-sm text-slate-400">Fast, efficient execution.</p>
                     </div>
                   </div>
-                  <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-5">
-                    <p className="text-xs uppercase tracking-[0.28em] text-slate-400">
+                  <div className="rounded-[24px] border border-white/10 bg-white/[0.03] p-4 sm:p-5">
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-slate-400 sm:text-xs sm:tracking-[0.28em]">
                       Product Scope
                     </p>
                     <p className="mt-4 font-[family-name:var(--font-display)] text-4xl font-bold text-white">
@@ -474,7 +491,7 @@ export function LandingPage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.25 }}
-          className="mx-auto max-w-7xl px-6 py-24 lg:px-10"
+          className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-10"
         >
           <SectionHeading
             eyebrow="Services"
@@ -482,7 +499,7 @@ export function LandingPage() {
             description="We design, build, and deliver high-performing digital products that drive real business results."
           />
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
             {services.map((service, index) => (
               <motion.article
                 key={service.title}
@@ -503,7 +520,7 @@ export function LandingPage() {
                   y: -5,
                   scale: service.featured ? 1.05 : 1.01,
                 }}
-                className={`glass-panel group relative overflow-hidden rounded-[28px] p-8 transition-shadow duration-300 ${
+                className={`glass-panel group relative w-full overflow-hidden rounded-[28px] p-5 transition-shadow duration-300 sm:p-8 ${
                   service.featured
                     ? "scale-[1.03] border-violet-400/45 bg-[linear-gradient(180deg,rgba(123,97,255,0.16),rgba(255,255,255,0.05)),rgba(255,255,255,0.04)] shadow-[0_34px_110px_rgba(8,8,14,0.72),0_0_0_1px_rgba(123,97,255,0.26)_inset,0_0_58px_rgba(123,97,255,0.24)] hover:border-violet-300/70 hover:shadow-[0_40px_130px_rgba(8,8,14,0.82),0_0_0_1px_rgba(123,97,255,0.38)_inset,0_0_80px_rgba(123,97,255,0.36)]"
                     : "shadow-card hover:border-violet-400/35 hover:shadow-[0_30px_90px_rgba(8,8,14,0.55),0_0_0_1px_rgba(123,97,255,0.22)_inset,0_0_44px_rgba(123,97,255,0.16)]"
@@ -518,7 +535,7 @@ export function LandingPage() {
                 />
                 <div className="service-sweep pointer-events-none absolute inset-x-0 bottom-[-55%] h-[85%] bg-gradient-to-t from-violet-400/0 via-violet-300/16 to-white/0 opacity-0 transition duration-500 group-hover:opacity-100" />
                 <div
-                  className={`relative mb-10 flex h-14 w-14 items-center justify-center rounded-2xl border bg-violet-500/10 text-violet-100 transition ${
+                  className={`relative mb-8 flex h-14 w-14 items-center justify-center rounded-2xl border bg-violet-500/10 text-violet-100 transition sm:mb-10 ${
                     service.featured
                       ? "border-violet-300/40 shadow-[0_0_34px_rgba(123,97,255,0.3)] group-hover:animate-pulse"
                       : "border-violet-300/20 shadow-glow"
@@ -526,12 +543,12 @@ export function LandingPage() {
                 >
                   <ServiceIcon type={service.icon as "design" | "frontend" | "backend"} />
                 </div>
-                <h3 className="relative font-[family-name:var(--font-display)] text-2xl font-semibold text-white">
+                <h3 className="relative font-[family-name:var(--font-display)] text-xl font-semibold text-white sm:text-2xl">
                   {service.title}
                 </h3>
                 <p className="relative mt-4 leading-7 text-slate-300">{service.description}</p>
                 <div className="relative mt-10 h-px bg-gradient-to-r from-violet-400/40 to-transparent transition group-hover:from-violet-300/70" />
-                <p className="relative mt-5 text-sm uppercase tracking-[0.28em] text-violet-200/75 transition group-hover:text-violet-100">
+                <p className="relative mt-5 text-[11px] uppercase tracking-[0.22em] text-violet-200/75 transition group-hover:text-violet-100 sm:text-sm sm:tracking-[0.28em]">
                   End-to-End Solution
                 </p>
               </motion.article>
@@ -548,7 +565,7 @@ export function LandingPage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mx-auto max-w-7xl px-6 py-24 lg:px-10"
+          className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-10"
         >
           <SectionHeading
             eyebrow="Projects"
@@ -556,13 +573,13 @@ export function LandingPage() {
             description="These are production-focused systems, not concept designs - each one combines UI/UX, frontend, and backend delivery in a single product workflow."
           />
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
             {projects.map((project) => (
               <motion.article
                 key={project.title}
                 whileHover={{ y: -8, scale: project.featured ? 1.04 : 1.01 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className={`group relative flex min-h-[41rem] flex-col overflow-hidden rounded-[30px] border bg-white/[0.03] shadow-card transition ${
+                className={`group relative flex min-h-[38rem] flex-col overflow-hidden rounded-[28px] border bg-white/[0.03] shadow-card transition sm:min-h-[41rem] sm:rounded-[30px] ${
                   project.featured
                     ? "scale-[1.02] border-violet-400/35 hover:shadow-[0_36px_110px_rgba(8,8,14,0.72),0_0_0_1px_rgba(123,97,255,0.24)_inset,0_0_60px_rgba(123,97,255,0.26)]"
                     : "border-white/10 hover:border-violet-400/25 hover:shadow-[0_28px_90px_rgba(8,8,14,0.55),0_0_44px_rgba(123,97,255,0.14)]"
@@ -570,17 +587,17 @@ export function LandingPage() {
               >
                 <div className={`pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100 ${project.glow}`} />
                 <div
-                  className={`relative h-72 overflow-hidden bg-gradient-to-br ${project.accent} ${
+                  className={`relative h-[23rem] overflow-hidden bg-gradient-to-br sm:h-72 ${project.accent} ${
                     project.featured ? "border-b border-violet-300/10" : ""
                   }`}
                 >
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.25),transparent_26%),linear-gradient(180deg,rgba(11,11,15,0.1),rgba(11,11,15,0.7))]" />
-                  <div className="absolute inset-x-6 bottom-6 rounded-[22px] border border-white/15 bg-black/25 p-5 backdrop-blur-md">
-                    <p className="text-xs uppercase tracking-[0.3em] text-violet-100/75">
+                  <div className="absolute inset-x-4 bottom-4 rounded-[22px] border border-white/15 bg-black/25 p-4 backdrop-blur-md sm:inset-x-6 sm:bottom-6 sm:p-5">
+                    <p className="text-[11px] uppercase tracking-[0.22em] text-violet-100/75 sm:text-xs sm:tracking-[0.3em]">
                       {project.meta}
                     </p>
                     {project.images ? (
-                      <div className="mt-4 grid grid-cols-2 gap-3">
+                      <div className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                         {project.images.map((image, imageIndex) => (
                           <motion.div
                             key={image.src}
@@ -591,7 +608,7 @@ export function LandingPage() {
                               ease: "easeInOut",
                             }}
                             className={`relative overflow-hidden rounded-[22px] border border-white/10 bg-black/20 p-3 shadow-[0_18px_50px_rgba(4,4,10,0.35)] ${
-                              image.type === "desktop" ? "h-36" : "h-36"
+                              image.type === "desktop" ? "h-32 sm:h-36" : "h-32 sm:h-36"
                             }`}
                           >
                             <motion.div
@@ -632,14 +649,14 @@ export function LandingPage() {
                     )}
                   </div>
                 </div>
-                <div className="relative flex flex-1 flex-col p-8">
-                  <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-white">
+                  <div className="relative flex flex-1 flex-col p-6 sm:p-8">
+                  <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-white sm:text-2xl">
                     {project.title}
                   </h3>
                   <p className="mt-3 max-w-xl leading-7 text-slate-300">
                     {project.description}
                   </p>
-                  <p className="mt-5 text-xs uppercase tracking-[0.28em] text-violet-200/80">
+                  <p className="mt-5 text-[11px] uppercase tracking-[0.22em] text-violet-200/80 sm:text-xs sm:tracking-[0.28em]">
                     {project.stack}
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-slate-300">
@@ -650,12 +667,12 @@ export function LandingPage() {
                       </li>
                     ))}
                   </ul>
-                  <div className="mt-auto pt-8">
+                  <div className="mt-auto pt-6 sm:pt-8">
                     <a
                       href={project.href ?? "#"}
                       target={project.href ? "_blank" : undefined}
                       rel={project.href ? "noreferrer" : undefined}
-                      className="inline-flex items-center gap-2 rounded-full border border-violet-300/0 bg-violet-500/0 px-4 py-2 text-sm font-semibold text-white opacity-0 transition duration-300 group-hover:border-violet-300/25 group-hover:bg-violet-500/10 group-hover:opacity-100 group-hover:shadow-[0_0_28px_rgba(123,97,255,0.2)]"
+                    className="inline-flex items-center gap-2 rounded-full border border-violet-300/0 bg-violet-500/0 px-4 py-2 text-sm font-semibold text-white opacity-100 transition duration-300 sm:opacity-0 group-hover:border-violet-300/25 group-hover:bg-violet-500/10 group-hover:opacity-100 group-hover:shadow-[0_0_28px_rgba(123,97,255,0.2)]"
                     >
                       <span>View Case Study</span>
                       <span className="text-violet-300 transition duration-300 group-hover:translate-x-1">
@@ -675,7 +692,7 @@ export function LandingPage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mx-auto max-w-7xl px-6 py-24 lg:px-10"
+          className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-10"
         >
           <SectionHeading
             eyebrow="Currently Building"
@@ -689,18 +706,18 @@ export function LandingPage() {
 
             <div ref={carouselRef} className="overflow-hidden">
               <motion.div
-                drag="x"
+                drag={isMobile ? false : "x"}
                 dragConstraints={{ left: -dragLimit, right: 0 }}
                 dragElastic={0.08}
                 whileTap={{ cursor: "grabbing" }}
-                className="flex cursor-grab gap-6 pb-4"
+                className="grid gap-4 pb-4 sm:flex sm:cursor-grab sm:gap-6"
               >
                 {currentlyBuilding.map((project, index) => (
                   <motion.article
                     key={project.title}
                     whileHover={{ y: -6, scale: 1.015 }}
                     transition={{ duration: 0.28, ease: "easeOut" }}
-                    className="glass-panel group relative min-h-[29rem] w-[22rem] shrink-0 overflow-hidden rounded-[30px] p-8 shadow-card sm:w-[25rem] lg:w-[28rem]"
+                    className="glass-panel group relative min-h-[24rem] w-full max-w-full overflow-hidden rounded-[28px] p-5 shadow-card sm:min-h-[29rem] sm:w-[25rem] sm:shrink-0 sm:p-8 lg:w-[28rem]"
                   >
                     <div
                       className={`pointer-events-none absolute inset-0 opacity-0 transition duration-300 group-hover:opacity-100 ${
@@ -710,13 +727,13 @@ export function LandingPage() {
                       }`}
                     />
                     <div className="relative flex items-center justify-between">
-                      <span className="rounded-full border border-violet-300/20 bg-violet-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.28em] text-violet-100">
+                      <span className="rounded-full border border-violet-300/20 bg-violet-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.22em] text-violet-100 sm:text-[11px] sm:tracking-[0.28em]">
                         In Development
                       </span>
                       <span className="h-2.5 w-2.5 rounded-full bg-violet-300 shadow-[0_0_16px_rgba(123,97,255,0.9)]" />
                     </div>
 
-                    <div className="relative mt-8 rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-5">
+                    <div className="relative mt-6 rounded-[24px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))] p-4 sm:mt-8 sm:p-5">
                       <div className="grid grid-cols-3 gap-3">
                         <div className="h-16 rounded-2xl bg-white/10" />
                         <div className="h-16 rounded-2xl bg-white/10" />
@@ -724,14 +741,14 @@ export function LandingPage() {
                       </div>
                     </div>
 
-                    <h3 className="relative mt-8 font-[family-name:var(--font-display)] text-3xl font-semibold tracking-[-0.04em] text-white">
+                    <h3 className="relative mt-6 font-[family-name:var(--font-display)] text-2xl font-semibold tracking-[-0.04em] text-white sm:mt-8 sm:text-3xl">
                       {project.title}
                     </h3>
-                    <p className="relative mt-4 leading-7 text-slate-300">
+                    <p className="relative mt-4 text-[15px] leading-7 text-slate-300">
                       {project.description}
                     </p>
 
-                    <ul className="relative mt-8 space-y-4 text-sm text-slate-300">
+                    <ul className="relative mt-6 space-y-3 text-sm text-slate-300 sm:mt-8 sm:space-y-4">
                       {project.points.map((point) => (
                         <li key={point} className="flex items-start gap-3">
                           <span className="mt-2 h-1.5 w-1.5 rounded-full bg-violet-300 shadow-[0_0_14px_rgba(123,97,255,0.7)]" />
@@ -751,7 +768,7 @@ export function LandingPage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mx-auto max-w-7xl px-6 py-24 lg:px-10"
+          className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-10"
         >
           <SectionHeading
             eyebrow="Why HL"
@@ -759,13 +776,13 @@ export function LandingPage() {
             description="This is end-to-end product development: UI/UX, frontend, backend, and deployment brought together to create digital products that are ready for real business use."
           />
 
-          <div className="grid gap-6 lg:grid-cols-3">
+          <div className="grid gap-4 sm:gap-6 lg:grid-cols-3">
             {whyHL.map((point) => (
-              <div key={point.title} className="glass-panel rounded-[28px] p-8 shadow-card">
-                <div className="mb-8 flex h-14 w-14 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-500/10 font-[family-name:var(--font-display)] text-lg font-bold text-violet-100 shadow-glow">
+              <div key={point.title} className="glass-panel rounded-[28px] p-5 shadow-card sm:p-8">
+                <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl border border-violet-300/20 bg-violet-500/10 font-[family-name:var(--font-display)] text-lg font-bold text-violet-100 shadow-glow sm:mb-8">
                   {point.icon}
                 </div>
-                <h3 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-white">
+                <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold text-white sm:text-2xl">
                   {point.title}
                 </h3>
                 <p className="mt-4 leading-7 text-slate-300">{point.description}</p>
@@ -779,7 +796,7 @@ export function LandingPage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.2 }}
-          className="mx-auto max-w-7xl px-6 py-24 lg:px-10"
+          className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-10"
         >
           <SectionHeading
             eyebrow="Team"
@@ -787,16 +804,16 @@ export function LandingPage() {
             description="A focused team combining product thinking, interface design, and full-stack execution in one streamlined workflow."
           />
 
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
             {teamMembers.map((member) => (
               <motion.article
                 key={member.name}
                 whileHover={{ y: -6, scale: 1.015 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="glass-panel group relative overflow-hidden rounded-[30px] p-8 text-center shadow-card hover:border-violet-300/25 hover:shadow-[0_28px_90px_rgba(8,8,14,0.52),0_0_44px_rgba(123,97,255,0.16)]"
+                className="glass-panel group relative overflow-hidden rounded-[30px] p-6 text-center shadow-card hover:border-violet-300/25 hover:shadow-[0_28px_90px_rgba(8,8,14,0.52),0_0_44px_rgba(123,97,255,0.16)] sm:p-8"
               >
                 <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(123,97,255,0.18),transparent_42%)] opacity-0 transition duration-300 group-hover:opacity-100" />
-                <div className="relative mx-auto mb-8 h-80 w-full max-w-[18rem]">
+                <div className="relative mx-auto mb-6 h-64 w-full max-w-[15rem] sm:mb-8 sm:h-80 sm:max-w-[18rem]">
                   <div className="pointer-events-none absolute inset-x-6 bottom-4 h-24 rounded-full bg-violet-500/20 blur-3xl opacity-70 transition duration-300 group-hover:opacity-100" />
                   <div className="relative h-full w-full overflow-hidden rounded-[28px] border border-violet-300/18 bg-white/5 p-1 shadow-[0_0_28px_rgba(123,97,255,0.14)]">
                     <div className="relative h-full w-full overflow-hidden rounded-[24px]">
@@ -811,10 +828,10 @@ export function LandingPage() {
                     </div>
                   </div>
                 </div>
-                <h3 className="relative font-[family-name:var(--font-display)] text-2xl font-semibold text-white">
+                <h3 className="relative font-[family-name:var(--font-display)] text-xl font-semibold text-white sm:text-2xl">
                   {member.name}
                 </h3>
-                <p className="relative mt-3 text-sm font-medium uppercase tracking-[0.22em] text-violet-200/80">
+                <p className="relative mt-3 text-[11px] font-medium uppercase tracking-[0.18em] text-violet-200/80 sm:text-sm sm:tracking-[0.22em]">
                   {member.role}
                 </p>
                 <p className="relative mx-auto mt-6 max-w-md leading-7 text-slate-300">
@@ -831,17 +848,17 @@ export function LandingPage() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.25 }}
-          className="mx-auto max-w-5xl px-6 py-24 lg:px-10"
+          className="mx-auto max-w-5xl px-4 py-16 sm:px-6 sm:py-24 lg:px-10"
         >
-            <div className="glass-panel relative overflow-hidden rounded-[36px] px-8 py-16 text-center shadow-card sm:px-14">
+            <div className="glass-panel relative overflow-hidden rounded-[28px] px-5 py-12 text-center shadow-card sm:rounded-[36px] sm:px-14 sm:py-16">
               <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-40 -translate-x-1/2 rounded-full bg-violet-500/20 blur-3xl" />
-              <p className="text-sm font-semibold uppercase tracking-[0.35em] text-violet-300/75">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-violet-300/75 sm:text-sm sm:tracking-[0.35em]">
                 Start Now
               </p>
-              <h2 className="mx-auto mt-6 max-w-3xl font-[family-name:var(--font-display)] text-4xl font-bold tracking-[-0.05em] text-white sm:text-5xl">
+              <h2 className="mx-auto mt-5 max-w-3xl text-[2rem] font-bold tracking-[-0.04em] text-white sm:mt-6 sm:font-[family-name:var(--font-display)] sm:text-5xl sm:tracking-[-0.05em]">
                 Ready to Turn Your Idea Into a Real Product?
               </h2>
-              <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-300">
+              <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-slate-300 sm:mt-6 sm:text-lg sm:leading-8">
                 I handle everything - UI/UX, frontend, backend, and deployment.
               </p>
               <div className="mt-10">
@@ -856,32 +873,32 @@ export function LandingPage() {
                 <p className="mt-4 text-sm text-slate-400">
                   Let's discuss your project - no commitment
                 </p>
-                <div className="mx-auto mt-8 max-w-md rounded-[28px] border border-violet-300/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-5 shadow-[0_22px_70px_rgba(8,8,14,0.4),0_0_0_1px_rgba(123,97,255,0.08)_inset] backdrop-blur-xl">
+                <div className="mx-auto mt-8 w-full max-w-md rounded-[28px] border border-violet-300/12 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03))] p-3 shadow-[0_22px_70px_rgba(8,8,14,0.4),0_0_0_1px_rgba(123,97,255,0.08)_inset] backdrop-blur-xl sm:p-5">
                   <div className="space-y-3">
                     <a
                       href="mailto:hlinfo19992000@gmail.com"
-                      className="group flex items-center justify-center gap-4 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-4 text-center transition duration-300 hover:border-violet-300/25 hover:bg-violet-500/[0.04] hover:shadow-[0_0_26px_rgba(123,97,255,0.12)]"
+                      className="group flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-4 text-left transition duration-300 hover:border-violet-300/25 hover:bg-violet-500/[0.04] hover:shadow-[0_0_26px_rgba(123,97,255,0.12)] sm:justify-center sm:gap-4 sm:text-center"
                     >
                       <div className="rounded-xl border border-violet-300/18 bg-violet-500/10 p-2 text-violet-200 transition group-hover:text-violet-100">
                         <ContactIcon type="email" />
                       </div>
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.24em] text-[#A1A1AA]">Email</p>
-                        <p className="mt-1 text-sm text-white transition group-hover:text-violet-200">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-[#A1A1AA] sm:text-xs sm:tracking-[0.24em]">Email</p>
+                        <p className="mt-1 break-all text-[13px] leading-6 text-white transition group-hover:text-violet-200 sm:text-sm">
                           hlinfo19992000@gmail.com
                         </p>
                       </div>
                     </a>
                     <a
                       href="tel:+963939240923"
-                      className="group flex items-center justify-center gap-4 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-4 text-center transition duration-300 hover:border-violet-300/25 hover:bg-violet-500/[0.04] hover:shadow-[0_0_26px_rgba(123,97,255,0.12)]"
+                      className="group flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-4 text-left transition duration-300 hover:border-violet-300/25 hover:bg-violet-500/[0.04] hover:shadow-[0_0_26px_rgba(123,97,255,0.12)] sm:justify-center sm:gap-4 sm:text-center"
                     >
                       <div className="rounded-xl border border-violet-300/18 bg-violet-500/10 p-2 text-violet-200 transition group-hover:text-violet-100">
                         <ContactIcon type="phone" />
                       </div>
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.24em] text-[#A1A1AA]">Phone</p>
-                        <p className="mt-1 text-sm text-white transition group-hover:text-violet-200">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-[#A1A1AA] sm:text-xs sm:tracking-[0.24em]">Phone</p>
+                        <p className="mt-1 break-words text-[13px] leading-6 text-white transition group-hover:text-violet-200 sm:text-sm">
                           +963 939 240 923
                         </p>
                       </div>
@@ -890,14 +907,14 @@ export function LandingPage() {
                       href="https://wa.me/963939240923"
                       target="_blank"
                       rel="noreferrer"
-                      className="group flex items-center justify-center gap-4 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-4 text-center transition duration-300 hover:border-violet-300/25 hover:bg-violet-500/[0.04] hover:shadow-[0_0_26px_rgba(123,97,255,0.12)]"
+                      className="group flex items-center gap-3 rounded-2xl border border-white/8 bg-white/[0.02] px-4 py-4 text-left transition duration-300 hover:border-violet-300/25 hover:bg-violet-500/[0.04] hover:shadow-[0_0_26px_rgba(123,97,255,0.12)] sm:justify-center sm:gap-4 sm:text-center"
                     >
                       <div className="rounded-xl border border-violet-300/18 bg-violet-500/10 p-2 text-violet-200 transition group-hover:text-violet-100">
                         <ContactIcon type="whatsapp" />
                       </div>
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.24em] text-[#A1A1AA]">WhatsApp</p>
-                        <p className="mt-1 text-sm text-white transition group-hover:text-violet-200">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[11px] uppercase tracking-[0.18em] text-[#A1A1AA] sm:text-xs sm:tracking-[0.24em]">WhatsApp</p>
+                        <p className="mt-1 break-words text-[13px] leading-6 text-white transition group-hover:text-violet-200 sm:text-sm">
                           Chat on WhatsApp -&gt;
                         </p>
                       </div>
