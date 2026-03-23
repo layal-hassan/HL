@@ -611,33 +611,6 @@ export function LandingPage() {
                           </motion.div>
                         ))}
                       </div>
-                    ) : project.image ? (
-                      <motion.div
-                        animate={{ y: [0, -6, 0] }}
-                        transition={{
-                          duration: project.featured ? 7 : 6,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                        className={`relative mt-4 flex items-center justify-center overflow-hidden rounded-[22px] border border-white/10 bg-black/20 p-4 shadow-[0_18px_50px_rgba(4,4,10,0.35)] ${
-                          project.imageType === "desktop" ? "h-40" : "h-44"
-                        }`}
-                      >
-                        <motion.div
-                          whileHover={{ scale: 1.02 }}
-                          transition={{ duration: 0.3, ease: "easeOut" }}
-                          className="relative h-full w-full"
-                        >
-                          <Image
-                            src={project.image}
-                            alt={project.imageAlt}
-                            fill
-                            className="rounded-[18px] object-contain transition duration-300 group-hover:scale-[1.02] group-hover:brightness-110"
-                            sizes="(max-width: 768px) 80vw, 30vw"
-                          />
-                          <div className="pointer-events-none absolute inset-0 rounded-[18px] bg-violet-500/0 opacity-0 transition duration-300 group-hover:bg-violet-500/10 group-hover:opacity-100" />
-                        </motion.div>
-                      </motion.div>
                     ) : (
                       <div className="mt-4 rounded-[22px] border border-white/10 bg-[linear-gradient(180deg,rgba(255,255,255,0.06),rgba(255,255,255,0.02))] p-4 shadow-[0_18px_50px_rgba(4,4,10,0.35)]">
                         <div className="rounded-[18px] border border-white/10 bg-[radial-gradient(circle_at_top,rgba(123,97,255,0.14),transparent_45%),linear-gradient(180deg,rgba(255,255,255,0.04),rgba(255,255,255,0.02))] p-4">
